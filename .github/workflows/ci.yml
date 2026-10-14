@@ -21,6 +21,34 @@ jobs:
           flags: '--fail-level crash'
           theme_root: './dawn'
 
+  check_dawn_in_pnpm_workspace:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          repository: "shopify/dawn"
+          path: "./dawn"
+
+      # npm can't install in a workspace with `workspace:*` dependencies
+      - name: Turn the checkout into a pnpm workspace
+        run: |
+          echo '{"name":"root","private":true,"dependencies":{"internal":"workspace:*"}}' > package.json
+          printf 'packages:\n  - "packages/*"\n' > pnpm-workspace.yaml
+          mkdir -p packages/internal
+          echo '{"name":"internal","version":"1.0.0"}' > packages/internal/package.json
+
+      - name: Theme Check
+        uses: ./
+        id: theme-check-action
+        with:
+          flags: '--fail-level crash'
+          theme_root: './dawn'
+
+      - name: Check the workspace was left untouched
+        run: test ! -e node_modules
+
   check_dawn_with_flags:
     runs-on: ubuntu-latest
 

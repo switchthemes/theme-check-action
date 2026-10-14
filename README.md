@@ -1,3 +1,13 @@
+> [!NOTE]
+> This is a fork of Shopify’s Theme Check action that is modified to support
+> package managers other than npm, specifically pnpm.
+>
+> It also itself uses pnpm instead of yarn classic, and node 24.
+
+In this fork, the Shopify CLI executable is installed with `npm` into an isolated directory under `$RUNNER_TEMP`, so the action should work the same in npm, yarn, pnpm and bun repositories (including workspaces).
+
+---
+
 # shopify/theme-check-action
 
 [About this repo](#about-this-repo) | [Usage](#usage) | [Configuration](#configuration)
