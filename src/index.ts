@@ -49,8 +49,9 @@ async function run() {
       process.exit(exitCode);
     }
   } catch (e) {
-    console.error(e.stack); // tslint:disable-line
-    core.setFailed(e.message);
+    const error = e instanceof Error ? e : new Error(String(e));
+    console.error(error.stack); // tslint:disable-line
+    core.setFailed(error.message);
   }
 }
 

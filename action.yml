@@ -2,7 +2,7 @@
 name: 'Run Theme Check on Shopify theme'
 branding:
   icon: shopping-bag
-  colour: green
+  color: green
 description: 'Run Theme Check on Shopify themes directly from GitHub'
 inputs:
   theme_root:
